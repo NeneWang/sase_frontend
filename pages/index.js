@@ -1,13 +1,72 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
+import { useState, useEffect } from 'react';
+
+
+import Layout from '@/components/Layout';
 import { giveRandomMeme } from "../api/utils";
 
 
 export default function HomePage() {
-    return <div>
-        <Navbar />
-        <h1>Home Page</h1>
+    const [memeUrl, setMemeUrl] = useState(null);
+    const [memeTitle, setMemeTitle] = useState(null);
+    const [memePostLink, setMemePostLink] = useState(null);
 
-        <button>Another Meme</button>
+    useEffect(() => {
+        // Fetch a random meme when the component mounts
+        async function fetchRandomMeme() {
+            const result = await giveRandomMeme();
+
+            // Check if the 'lastPreview' property is defined in the result
+            if (result && result.lastPreview) {
+                setMemeUrl(result.lastPreview);
+                setMemeTitle(result.title);
+                setMemePostLink(result.url);
+            } else {
+                console.error('Invalid meme data:', result);
+            }
+        }
+        fetchRandomMeme();
+
+
+        const handleKeyPress = (event) => {
+            if (event.key === 'Enter') {
+                // Do something when Enter key is pressed on the page
+                //   console.log('Enter key was pressed on the page.');
+                fetchRandomMeme();
+            }
+        };
+
+        // Attach the event listener to the window object
+        window.addEventListener('keydown', handleKeyPress);
+
+        // Cleanup: remove the event listener when the component unmounts
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, []);
+
+    const handleAnotherMemeClick = async () => {
+        // Fetch another random meme when the button is clicked
+        const { lastPreview } = await giveRandomMeme();
+        setMemeUrl(lastPreview);
+    };
+
+    return <div>
+        <Layout>
+
+            {memeUrl &&
+                <div>
+                    <h1>{memeTitle}</h1>
+                    <img src={memeUrl}
+                        style={{ width: '100%', height: 'auto' }}
+                        alt="Random Meme" />
+                    <a href={memePostLink}>{memeUrl.url}</a>
+
+                </div>
+            }
+
+            <button onClick={handleAnotherMemeClick}>Another Meme</button>
+
+        </Layout>
     </div>;
 }
