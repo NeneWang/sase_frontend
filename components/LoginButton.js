@@ -5,10 +5,12 @@ export default function Component() {
   if (session) {
     return (
       <>
-        <a >
-
+        <div className="header item" >
           {session.user.email}
-          <button onClick={() => signOut()}>Sign out</button>
+
+        </div>
+        <a className="header item" onClick={() => signOut()}>
+          Sign out
         </a>
       </>
     )
@@ -16,7 +18,7 @@ export default function Component() {
   return (
     <>
 
-      <button onClick={() => signIn()}>Sign in</button>
+      <button className="header item" onClick={() => signIn()}>Sign in</button>
     </>
   )
 }

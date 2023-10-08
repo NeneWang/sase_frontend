@@ -65,10 +65,9 @@ export default function HomePage() {
 
                 </div>
             }
-
-            <LoginButton />
-
-            <button onClick={handleAnotherMemeClick}>Another Meme</button>
+            <div className='center aligned content'>
+                <button  className='ui primary button center aligned content' onClick={handleAnotherMemeClick}>Another Meme [ Press Enter ] </button>
+            </div>
 
         </Layout>
     </div>;
