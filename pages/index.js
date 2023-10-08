@@ -2,9 +2,10 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 
-import Layout from '@/components/Layout';
 import { giveRandomMeme } from "../api/utils";
 
+import Layout from '@/components/Layout';
+import LoginButton from '@/components/LoginButton';
 
 export default function HomePage() {
     const [memeUrl, setMemeUrl] = useState(null);
@@ -64,6 +65,8 @@ export default function HomePage() {
 
                 </div>
             }
+
+            <LoginButton />
 
             <button onClick={handleAnotherMemeClick}>Another Meme</button>
 

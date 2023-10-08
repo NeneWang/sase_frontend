@@ -8,12 +8,6 @@ export default function Layout(props) {
         <Navbar />
         <Container>
 
-
-            <div className="ui top large padded">
-                
-                    _
-                
-            </div>
                 {props.children}
 
 
