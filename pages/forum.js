@@ -33,7 +33,7 @@ export default function Forum() {
         return (
 
             <div>
-                <CreateFormForm />
+                
                 <div className="ui list">
                     {forumsData.map((forum, index) => (
                         <div className="item" key={index}>
@@ -71,6 +71,7 @@ export default function Forum() {
     return (
         <Layout>
             <h1>Forum</h1>
+            <CreateFormForm getAllPosts={getAllPosts} />
             <ForumList />
 
         </Layout>

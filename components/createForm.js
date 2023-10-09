@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react"
 
 
 
-export default function CreateFormForm() {
+export default function CreateFormForm( {getAllPosts} ) {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const { data: session } = useSession()
@@ -25,6 +25,7 @@ export default function CreateFormForm() {
             createForum(newPostData);
 
             // Reset the form fields after successful submission
+            getAllPosts();
             setTitle('');
             setBody('');
         } catch (error) {
