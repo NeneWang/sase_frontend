@@ -11,7 +11,7 @@ const Navbar = () => {
     <div className="ui  menu">
       <div className="ui container">
         <Link href="/" className="header item">
-          Your Logo 
+          Well Mind
         </Link>
         <div className="right menu">
           <Link href="/forum" className='item' >

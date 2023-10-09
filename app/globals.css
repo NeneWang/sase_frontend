@@ -28,3 +28,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+/* CSS file (e.g., styles.css) */
+.hovered-item:hover {
+  background-color: #f0f0f0; /* Change the background color as desired */
+  cursor: pointer;
+}

@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react"
 
 
 
-export default function CreateFormForm( {getAllPosts} ) {
+export default function CreateFormForm( {getAllPosts, parent_id = 0} ) {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const { data: session } = useSession()
@@ -20,7 +20,7 @@ export default function CreateFormForm( {getAllPosts} ) {
                 title,
                 body,
                 email: session.user.email,
-                parent_id: 0,
+                parent_id: parent_id,
             };
             createForum(newPostData);
 
@@ -35,6 +35,7 @@ export default function CreateFormForm( {getAllPosts} ) {
 
     return (
         <Form>
+            <p>{parent_id == 0?"Create a root thread": `Create a comment for thread ${parent_id}`}</p>
             <Form.Field>
                 <label>Title</label>
                 <input

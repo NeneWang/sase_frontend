@@ -1,12 +1,12 @@
 import React from 'react';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, List, } from 'semantic-ui-react';
 
 
 import { useEffect, useState } from 'react';
 import CreateFormForm from '@/components/createForm';
 
 import Layout from '@/components/Layout';
-import { getPosts, getForum, respondThread, createForum} from '@/api/utils';
+import { getPosts, getForum, respondThread, createForum } from '@/api/utils';
 // import {FormForCreate} from '@/components/createForm';
 
 
@@ -16,6 +16,8 @@ export default function Forum() {
 
     const [forumsData, setForumsData] = useState([]);
     const [individualPost, setIndividualPost] = useState(null);
+    const [parent_id, setParent_id] = useState(0);
+
 
 
 
@@ -33,36 +35,91 @@ export default function Forum() {
         return (
 
             <div>
-                
+
                 <div className="ui list">
+
+                    <List.Item onClick={() => {
+                        // loadIndividualPost(null);
+                        setIndividualPost(null);
+                        setParent_id(0);
+                    }}>
+                        <List.Content>
+                            <List.Header>Select Root</List.Header>
+                            <List.Description>Create a root thread</List.Description>
+                        </List.Content>
+                    </List.Item>
                     {forumsData.map((forum, index) => (
-                        <div className="item" key={index}>
-                            <div className="content">
-                                <div className="header">{forum.title}</div>
-                                <div className="description">
-                                    Created by User ID {forum.user_id} on {forum.created_time}
-                                </div>
-                            </div>
-                        </div>
+
+                        <List.Item key={index} className="hoverable-item" onClick={() => {
+                            loadIndividualPost(forum.thread_id);
+                            setParent_id(forum.thread_id);
+                        }}>
+                            <List.Content>
+                                <List.Header>{forum.body}</List.Header>
+                                <List.Description>{forum.created_time}</List.Description>
+                            </List.Content>
+                        </List.Item>
                     ))}
                 </div>
             </div>
         );
     };
 
+    const loadIndividualPost = async (id) => {
+        const individualPost = await getForum(id);
+        // setIndividualPost(individualPost);
+        console.log("individualPost", individualPost);
+        setIndividualPost({ ...individualPost });
 
-    const showIndividualForum = (individualPost) => {
+
+    }
+
+    const showIndividualForum = (postData) => {
+        const [individualPost, comments] = [postData["forum"], postData["comments"]];
 
         return (
-            <div className="ui list">
-                <div className="item">
+            <div className="ui list"
+
+
+            >
+                <div className="item"
+
+                // onClick={() => {
+                //     loadIndividualPost(individualPost.thread_id);
+                //     setParent_id(individualPost.thread_id);
+                // }}
+
+                >
                     <div className="content">
                         <div className="header">{individualPost.title}</div>
                         <div className="description">
+                            {individualPost.body}
+
+                            <br />
                             Created by User ID {individualPost.user_id} on {individualPost.created_time}
                         </div>
                     </div>
                 </div>
+
+                {
+                    comments.map((comment, index) => (
+                        <div className="item" key={index}
+                            onClick={() => {
+                                const post = comment?.["forum"]
+                                console.log("subs elected", post.thread_id)
+                                loadIndividualPost(post.thread_id);
+                                setParent_id(post.thread_id);
+                            }}
+                        >
+                            {comment?.["forum"]?.title}
+                            {showIndividualForum(comment)}
+                        </div>
+                    ))
+                }
+
+                {/* Buttons for creating comment */}
+
+
             </div>
         )
     }
@@ -71,7 +128,10 @@ export default function Forum() {
     return (
         <Layout>
             <h1>Forum</h1>
-            <CreateFormForm getAllPosts={getAllPosts} />
+            {individualPost && showIndividualForum(individualPost)}
+            <CreateFormForm getAllPosts={getAllPosts} parent_id={parent_id} />
+
+            <h5>Threads</h5>
             <ForumList />
 
         </Layout>
