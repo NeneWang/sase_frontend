@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useSession } from "next-auth/react"
 // const {MEME_API} = require('./constants');
 import { MEME_API, BACKEND_API } from './constants';
 import { func } from 'prop-types';
@@ -28,27 +27,21 @@ export async function giveRandomMeme() {
 
 export async function getPosts({filter = ""} = {}) {
 
-    const response = await axios.get(BACKEND_API + `posts/${filter}`);
+    const response = await axios.get(BACKEND_API + `forum/${filter}`);
     const posts = response.data;
     return posts;
 }
 
+
 export async function createForum(newPostData) {
-    /**
-     * {
-        "body": "string",
-        "title": "Example",
-        "email": "wangnelson2@gmail.com",
-        "parent_id": 0
-        }
-     */
+    
     const response = await axios.post(BACKEND_API + `forum/`, newPostData);
     const newPost = response.data;
     return newPost;
+  }
+  
 
-}
-
-export async function respondThread(newPostData,) {
+export async function respondThread(newPostData) {
     /**
      * {
         "body": "string",
