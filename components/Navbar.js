@@ -17,6 +17,9 @@ const Navbar = () => {
           <Link href="/forum" className='item' >
             Forum
           </Link>
+          <Link href="/connect" className='item' >
+            Connect with People
+          </Link>
           <LoginButton />
         </div>
       </div>
