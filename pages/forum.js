@@ -74,8 +74,14 @@ export default function Forum() {
 
     }
 
+
+
     const showIndividualForum = (postData) => {
         const [individualPost, comments] = [postData["forum"], postData["comments"]];
+
+        if(individualPost == null){
+            return <div></div>;
+        }
 
         return (
             <div className="ui list"
@@ -84,16 +90,12 @@ export default function Forum() {
             >
                 <div className="item"
 
-                // onClick={() => {
-                //     loadIndividualPost(individualPost.thread_id);
-                //     setParent_id(individualPost.thread_id);
-                // }}
 
                 >
                     <div className="content">
-                        <div className="header">{individualPost.title}</div>
+                        <div className="header">{individualPost?.title??""}</div>
                         <div className="description">
-                            {individualPost.body}
+                            {individualPost?.body??""}
 
                             <br />
                             Created by User ID {individualPost.user_id} on {individualPost.created_time}
@@ -111,7 +113,6 @@ export default function Forum() {
                                 setParent_id(post.thread_id);
                             }}
                         >
-                            {comment?.["forum"]?.title}
                             {showIndividualForum(comment)}
                         </div>
                     ))
@@ -129,7 +130,7 @@ export default function Forum() {
         <Layout>
             <h1>Forum</h1>
             {individualPost && showIndividualForum(individualPost)}
-            <CreateFormForm getAllPosts={getAllPosts} parent_id={parent_id} />
+            <CreateFormForm getAllPosts={getAllPosts} parent_id={parent_id} loadIndividualPost={loadIndividualPost} />
 
             <h5>Threads</h5>
             <ForumList />
