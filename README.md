@@ -46,7 +46,11 @@ Semantic UI
 Changes ong github oath callbacks
 
 ```
+
+http://localhost:3000/
 http://localhost:3000/api/auth/callback/github
+
+https://nenewang.github.io/sase_frontend
 https://nenewang.github.io/sase_frontend/api/auth/callback/github
 
 ```
