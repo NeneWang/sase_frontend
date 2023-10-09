@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    target: 'experimental-serverless-trace', // This line is required for static HTML export
+    output: 'export',
 }
 
 module.exports = nextConfig
