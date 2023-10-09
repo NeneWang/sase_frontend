@@ -7,25 +7,11 @@ export default NextAuth({
   
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      // clientId: process.env.GITHUB_ID,
+      // clientSecret: process.env.GITHUB_SECRET,
+      clientId: "df0e3352d6d3c2aa5aae",
+      clientSecret: "ae777c63f969cc3825d43caaba58023bf6401567"
     }),
-    // CredentialsProvider({
-    //   name: 'Credentials',
-    //   credentials: {
-    //     username: { label: "Username", type: "text", placeholder: "jsmith" },
-    //     password: { label: "Password", type: "password" }
-    //   },
-    //   authorize: async (credentials) => {
-    //     const user = { id: 1, name: 'nenewang', email: 'wangnelson2@gmail.com' }
-    //     if (credentials.email === user.email) {
-    //       return Promise.resolve(user);
-    //     } else {
-    //       return Promise.resolve(null);
-    //     }
-    //   },
-    // }),
-    // ...add more providers here
   ],
   // Add other NextAuth.js configuration options here
 });
